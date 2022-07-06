@@ -14,7 +14,7 @@ app.post('/team/pokemon', () => {
 
 })
 
-app.get('/team', () => {
+app.get('/team', (req, res) => {
 
     res.status(200).send('Helo World!');
 
