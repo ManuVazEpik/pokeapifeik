@@ -9,7 +9,7 @@ describe('Suite de pruebas de auth', () => {
     it('Should return 401 when no jwt token available', (done) => {
         //Cuando la llamada no tiene correctamente la llave
         chai.request(app)
-        .get('/team')
+        .get('/teams')
         .end((err, res) => {
             chai.assert.equal(res.statusCode, 401)
             done()
@@ -18,7 +18,8 @@ describe('Suite de pruebas de auth', () => {
 
     it('Should return 200 and token for succesfull login', (done) => {
         chai.request(app)
-        .post('/login')
+        .post('/auth/login')
+        .set('content-type', 'application/json')
         .send({user: 'Manubasepi', password: '1234'})
         .end((err, res) => {
             chai.assert.equal(res.statusCode, 200)
@@ -29,12 +30,12 @@ describe('Suite de pruebas de auth', () => {
 
     it('Should return 200 when jwt token valid', (done) => {
         chai.request(app)
-        .post('/login')
+        .post('/auth/login')
         .set('content-type', 'application/json')
         .send({user: 'Manubasepi', password: '1234'})
         .end((err, res) => {
             chai.request(app)
-            .get('/team')
+            .get('/teams')
             .set('Authorization', `JWT ${res.body.token}`)
             .end((err, res) => {
                 chai.assert.equal(res.statusCode, 200)
