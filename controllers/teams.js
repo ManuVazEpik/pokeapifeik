@@ -1,7 +1,7 @@
 const teamsDatabase = {}
 
 const bootstrapTeam = (userId) => {
-    teamsDatabase[userId] = [{name: 'Bulbasaur'}, {name: 'Ralts'}]
+    teamsDatabase[userId] = []
 }
 
 const getTeamOfUser = (userId) => {
@@ -10,8 +10,8 @@ const getTeamOfUser = (userId) => {
 
 }
 
-const addPokemon = (userId, pokemonName) => {
-    teamsDatabase[userId].push({name: pokemonName})
+const addPokemon = (userId, pokemon) => {
+    teamsDatabase[userId].push(pokemon)
 }
 
 const setTeam = (userId, team) => {
