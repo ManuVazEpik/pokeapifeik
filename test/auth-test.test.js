@@ -16,9 +16,22 @@ describe('Suite de pruebas de auth', () => {
         })
     })
 
+    it('Should return 200 and token for succesfull login', (done) => {
+        chai.request(app)
+        .post('/login')
+        .send({user: 'Manubasepi', password: '1234'})
+        .end((err, res) => {
+            chai.assert.equal(res.statusCode, 200)
+            chai.assert.isNotNull(res.body.token)
+            done()
+        })
+    })
+
     it('Should return 200 when jwt token valid', (done) => {
         chai.request(app)
         .post('/login')
+        .set('content-type', 'application/json')
+        .send({user: 'Manubasepi', password: '1234'})
         .end((err, res) => {
             chai.request(app)
             .get('/team')

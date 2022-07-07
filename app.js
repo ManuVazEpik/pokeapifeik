@@ -1,10 +1,15 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+const bodyParser = require('body-parser');
 const passport = require('passport')
 const usersController = require('./controllers/users.js')
 const jwt = require('jsonwebtoken')
 require('./auth')(passport)
+
+usersController.registerUser('Manubasepi', '1234')
+
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
 
@@ -14,18 +19,24 @@ app.get('/', (req, res) => {
 
 app.post('/login', (req,res) => {
 
+    if(!req.body){
+        return res.status(400).json({message: 'Datos no recibidos'})
+    }else if(!req.body.user || !req.body.password){
+        return res.status(400).json({message: 'Datos no recibidos'})
+    }
+
     //Comprobamos crendenciales
     usersController.checkUserCredentials(req.body.user, req.body.password, (err, result) => {
         if(!result){
             return res.status(401).json({message: 'Usuario o contraseña incorrectos'})
         }
         //Si las credenciales son correctas, generamos un token
-        const token = jwt.sign({userId: req.body.user})
+        const tokenCreado = jwt.sign({userId: req.body.user}, 'secretPassword')
 
-    })
+        res.status(200).json({
+            token: tokenCreado
+        })
 
-    res.status(200).json({
-        token: token
     })
 
 })
