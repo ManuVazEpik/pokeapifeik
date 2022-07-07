@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 
 //Controladores
 const usersController = require('../controllers/users.js')
-usersController.registerUser('Manubasepi', '1234')
+usersController.registerUser('Aldito', '4321')
 
 router.route('/')
 .get((req, res) => {
@@ -25,7 +25,8 @@ router.route('/login')
             return res.status(401).json({message: 'Usuario o contraseña incorrectos'})
         }
         //Si las credenciales son correctas, generamos un token
-        const tokenCreado = jwt.sign({userId: req.body.user}, 'secretPassword')
+        let user = usersController.getUserIdByUserName(req.body.user)
+        const tokenCreado = jwt.sign({userId: user.userId}, 'secretPassword')
 
         res.status(200).json({
             token: tokenCreado

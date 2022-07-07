@@ -20,7 +20,7 @@ describe('Suite de pruebas de auth', () => {
         chai.request(app)
         .post('/auth/login')
         .set('content-type', 'application/json')
-        .send({user: 'Manubasepi', password: '1234'})
+        .send({user: 'Aldito', password: '4321'})
         .end((err, res) => {
             chai.assert.equal(res.statusCode, 200)
             chai.assert.isNotNull(res.body.token)
@@ -32,7 +32,7 @@ describe('Suite de pruebas de auth', () => {
         chai.request(app)
         .post('/auth/login')
         .set('content-type', 'application/json')
-        .send({user: 'Manubasepi', password: '1234'})
+        .send({user: 'Aldito', password: '4321'})
         .end((err, res) => {
             chai.request(app)
             .get('/teams')

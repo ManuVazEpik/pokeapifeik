@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const usersController = require('./controllers/users.js')
 const jwt = require('jsonwebtoken')
 
-usersController.registerUser('Manubasepi', '1234')
 const authRoutes = require('./routers/auth.js').router
 const teamsRoutes = require('./routers/teams.js').router
 
